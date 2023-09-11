@@ -1,29 +1,28 @@
 from collections import deque
-global dq
 dq = deque()
-N,M = map(int,input().split())
+n, m = map(int, input().split())
 
-board = []
-for _ in range(N):
-    board.append(list(map(int,input())))
+board = [input().rstrip() for _ in range(n)]
+visited = [[0]*m for _ in range(n)]
 
-#상하좌우
-dx = [0,0,-1,1]
-dy = [-1,1,0,0]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
-def bfs(y,x):
-    dq.append((y,x))
-    while dq:
-        y,x = dq.popleft()
-        for i in range(4):
-            ny, nx = y+dy[i], x+dx[i]
-            if nx < 0 or ny < 0 or nx >= M or ny >= N:
-                continue
-            if board[ny][nx] == 0:
-                continue
-            if board[ny][nx] == 1: #첫 방문 기록
-                dq.append((ny,nx))
-                board[ny][nx] = board[y][x] + 1
+dq.append((0,0))
+visited[0][0] = 1
 
-    return board[N-1][M-1] #반드시 탈출가능한 형태로 준다 함
-print(bfs(0,0))
+while dq:
+    x, y = dq.popleft()
+
+    if x == n-1 and y == m-1: # 마지막 좌표라면 !
+        print(visited[x][y])
+        break
+
+    for i in range(4):
+        # 다음 방문 확인
+        nx = x + dx[i]
+        ny = y + dy[i]
+        if 0 <= nx < n and 0 <= ny < m: # 범위 내에 있다면
+            if visited[nx][ny] == 0 and board[nx][ny] == '1': # 방문안했고, 입력받은 맵이 1이라면
+                visited[nx][ny] = visited[x][y] +1 # 누적
+                dq.append((nx,ny))
