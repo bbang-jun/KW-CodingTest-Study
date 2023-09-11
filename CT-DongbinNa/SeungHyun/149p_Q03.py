@@ -30,7 +30,7 @@ def bfs(graph, x, y):
             ny = y + dy[i]
 
             # 얼음 틀을 벗어나지 않는지 검사
-            if nx < 0 or nx >= N or ny < 0 or ny >= N:
+            if nx < 0 or nx >= N or ny < 0 or ny >= M:
                 continue
 
             # 얼음이 차 있는 칸만 검사
