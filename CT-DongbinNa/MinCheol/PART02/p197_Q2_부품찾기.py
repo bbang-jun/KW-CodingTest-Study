@@ -33,3 +33,4 @@ for i in range(M):
 
 #this problem is better to use counting sort
 #but it has better memory performance
+#and there is also "in" method(function) in python....
