@@ -25,3 +25,5 @@ while Numbers[1]==0:
 
 print(Times)
     
+#directionality of solution tries to solve in bottom up. but i solved in top down way.
+#it's better to consider in both ways
