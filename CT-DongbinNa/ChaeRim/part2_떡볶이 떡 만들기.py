@@ -6,7 +6,7 @@ array = list(map(int,input().split()))
 start,end = 0, n-1
 
 while start < end: # 반씩 줄여나가 O(logN)
-  # 여기서 start <= end조건을 쓰면 안되는지 궁금
+  # 여기서 start <= end조건을 쓰면 안되는지 궁금 
   
     tmp = 0
     mid = (start+end)//2
