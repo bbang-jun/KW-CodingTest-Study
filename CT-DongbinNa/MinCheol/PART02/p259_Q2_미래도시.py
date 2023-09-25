@@ -30,3 +30,5 @@ if graph[1][K]==INFINITE or graph[K][X]==INFINITE:
 else:
     print(graph[1][K]+graph[K][X])
 
+#I think it have to think about not only [a][b] but also [b][a]
+#the solution have some problem
