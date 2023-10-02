@@ -26,6 +26,10 @@ def solution(food_times, k):
 
     return answer
 
+#I think it is better to calculate by one by one
+#failed to sovle efficiency
+#It have to solve with eating not by number, better to calculate with samll amount of food
+
 FT = [3,1,2]
 K=5
 

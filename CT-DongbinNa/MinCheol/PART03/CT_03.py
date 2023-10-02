@@ -6,7 +6,7 @@ Arr = list(map(int,Temp))
 Answer1 = Answer2 = 0
 #Answer1 is to change array into 0
 #Answer2 is to change array into 1
-
+    
 if Arr[0]==1:
     Answer1+=1
 else:
