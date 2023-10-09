@@ -26,8 +26,8 @@ def solution(key, lock):
             for B in range(Move*(-1), Move+1): #Move Right and Left
                 Count=0 #Count hole that fits key
 
-                for C in range(Move):
-                    for D in range(Move):
+                for C in range(Len_Lock):
+                    for D in range(Len_Lock):
                         if C+A<0 or Len_Key<=C+A or D+B<0 or Len_Key<=D+B:
                             continue
 
