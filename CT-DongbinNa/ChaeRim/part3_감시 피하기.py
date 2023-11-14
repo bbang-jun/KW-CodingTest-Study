@@ -3,6 +3,7 @@ from itertools import combinations
 from collections import deque
 input = sys.stdin.readline
 
+# bfs 상하좌우 탐색
 def bfs():
     global new_board
     dq = deque([])
@@ -19,6 +20,7 @@ def bfs():
                 dq.append((ny,nx,ii))
     return True
 
+# main
 if __name__ == "__main__":
     n = int(input())
     graph = []
@@ -28,6 +30,7 @@ if __name__ == "__main__":
     for _ in range(n):
         graph.append(list(map(str,input().split())))
 
+    # 한 줄로 teacher, empty 좌표 저장
     teacher = [(y,x) for y in range(n) for x in range(n) if graph[y][x] == 'T']
     empty = [(y,x) for y in range(n) for x in range(n) if graph[y][x] == 'X']
 

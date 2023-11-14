@@ -4,7 +4,6 @@ input = sys.stdin.readline
 # 계산은 연산자 우선순위 무시하고 앞에서 부터
 # 나눗셈은 몫만
 # 음수 / 양수는 양수로 바꾸고 몫을 취하고 음수로 처리함
-# 식은 개수에 따라 다름 ..
 
 n = int(input())
 sequence = list(map(int,input().split()))
