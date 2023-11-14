@@ -1,53 +1,58 @@
 from collections import deque
 
-dx = [1, 0, -1, 0]
-dy = [0, 1, 0, -1]
-
-MAX = float('inf')
 
 def solution(board):
+    # 보드 한 변의 길이
     N = len(board)
-    answer = 0
-    visited = set()
-    q = deque([(0,0,0,0)])
-    
-    while q :
-        x, y, r, t = q.popleft()
-        if (x, y) == (N-1, N-1) or (x + dx[r], y + dy[r]) == (N-1, N-1) :
-            answer = t
-            break
-        if (x, y, r) in visited or (x + dx[r], y + dy[r], (r+2) % 4) in visited :
-            continue
-        visited.add((x, y, r))
-        
-        for i in range(4) :
-            ax, ay = x + dx[i], y + dy[i]
-            if not -1 < ax < N or not -1 < ay < N or board[ay][ax] == 1:
-                continue
-            _ax, _ay = ax + dx[r], ay + dy[r]
-            if not -1 < _ax < N or not -1 < _ay < N or board[_ay][_ax] == 1:
-                continue
-            q.append((ax, ay, r, t+1))
-        
-        for i in [-1, 1] :
-            _r = (r + i) % 4
-            ax, ay = x + dx[_r], y + dy[_r]
-            if not -1 < ax < N or not -1 < ay < N or board[ay][ax] == 1:
-                continue
-            cx, cy = ax + dx[r], ay + dy[r]
-            if board[cy][cx] == 1 :
-                continue
-            q.append((x, y, _r, t+1))
-        
-        x, y, r = x + dx[r], y + dy[r], (r+2) % 4
-        for i in [-1, 1] :
-            _r = (r + i) % 4
-            ax, ay = x + dx[_r], y + dy[_r]
-            if not -1 < ax < N or not -1 < ay < N or board[ay][ax] == 1:
-                continue
-            cx, cy = ax + dx[r], ay + dy[r]
-            if board[cy][cx] == 1 :
-                continue
-            q.append((x, y, _r, t+1))
-        
-    return answer
+    # 방향 벡터 (하우상좌)
+    drdc = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+    # (행1, 열1, 로봇이 놓인 방향, 이동 횟수)
+    # 방향 - 0: 세로, 1: 가로
+    # 위치값(행1, 열1)은 행이나 열이 더 작은 값을 갖는다.
+    queue = deque([(0, 0, 1, 0)])
+    # (행1, 열1, 로봇이 놓인 방향)
+    visited = set([(0, 0, 1)])
+
+    while queue:
+        r1, c1, robot_d, mv = queue.popleft()
+        r2, c2 = r1 + drdc[robot_d][0], c1 + drdc[robot_d][1]
+
+        # 목적지 도착
+        if r2 == N - 1 and c2 == N - 1:
+            return mv
+
+        # 네 방향으로 이동
+        for d in range(4):
+            nr1, nc1 = r1 + drdc[d][0], c1 + drdc[d][1]
+            nr2, nc2 = r2 + drdc[d][0], c2 + drdc[d][1]
+
+            # 보드를 벗어나지 않는 범위로만 이동
+            if 0 <= nr1 < N and 0 <= nc1 < N and 0 <= nr2 < N and 0 <= nc2 < N:
+                # 이미 방문했거나 한 칸이라도 벽인 경우에는 이동하지 않음
+                if (nr1, nc1, robot_d) in visited or board[nr1][nc1] == 1 or board[nr2][nc2] == 1:
+                    continue
+
+                # 현재 방향을 유지한채로 상하좌우로 이동
+                queue.append((nr1, nc1, robot_d, mv + 1))
+                visited.add((nr1, nc1, robot_d))
+
+                # 회전
+                rotated_d = robot_d ^ 1
+                # 로봇 세로 + 오른쪽으로 회전, 로봇 가로 + 아래쪽으로 회전
+                if robot_d + d == 1:
+                    if (r1, c1, rotated_d) not in visited:
+                        queue.append((r1, c1, rotated_d, mv + 1))
+                        visited.add((r1, c1, rotated_d))
+                    if (r2, c2, rotated_d) not in visited:
+                        queue.append((r2, c2, rotated_d, mv + 1))
+                        visited.add((r2, c2, rotated_d))
+                # 로봇 세로 + 왼쪽으로 회전, 로봇 가로 + 위쪽으로 회전
+                elif robot_d + d == 3:
+                    if (nr1, nc1, rotated_d) not in visited:
+                        queue.append((nr1, nc1, rotated_d, mv + 1))
+                        visited.add((nr1, nc1, rotated_d))
+                    if (nr2, nc2, rotated_d) not in visited:
+                        queue.append((nr2, nc2, rotated_d, mv + 1))
+                        visited.add((nr2, nc2, rotated_d))
+
+    return -1
