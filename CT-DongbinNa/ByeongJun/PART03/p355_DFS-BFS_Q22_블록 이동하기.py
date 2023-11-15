@@ -12,6 +12,7 @@ def solution(board):
     # (행1, 열1, 로봇이 놓인 방향)
     visited = set([(0, 0, 1)])
 
+
     while queue:
         r1, c1, robot_d, mv = queue.popleft()
         r2, c2 = r1 + drdc[robot_d][0], c1 + drdc[robot_d][1]
